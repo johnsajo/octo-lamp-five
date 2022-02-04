@@ -44,6 +44,16 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'Which is the largest country in the world',
+      o: ['China', 'Japan', 'Russia', 'Canada'],
+      a: 2,
+    },
+    {
+      q: 'What is pH level of Water',
+      o: ['9', '2', '5', '7'],
+      a: 3,
+    },
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -63,6 +73,9 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  // call the displayQuiz function
+  displayQuiz();
+
   // Calculate the score
   const calculateScore = () => {
     let score = 0;
@@ -76,15 +89,70 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
-        }
+          liElement.style.backgroundColor = "green";
 
         if (radioElement.checked) {
           // code for task 1 goes here
+          score ++;
+
         }
+        }
+
+
       }
     });
-  };
+    let scoreElement = document.getElementById("score");
+    scoreElement.innerHTML = "You have scored " + score + " out of 5!"
+  }; 
 
-  // call the displayQuiz function
-  displayQuiz();
+
+  //countdown timer
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    const interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            calculateScore();
+            clearInterval(interval);
+            
+        }
+    }, 1000);
+}
+
+
+  
+  var smit=document.getElementById("btnSubmit");
+  if(smit.addEventListener){
+      smit.addEventListener("click",calculateScore,false);
+  }else{
+      //ie doesn't have addEventListner
+      smit.attachEvent('onClick', calculateScore);
+  }
+
+  var resetButton=document.getElementById("btnReset");
+  if(resetButton.addEventListener){
+    resetButton.addEventListener("click",function(){location.reload()},false);
+}else{
+    //ie doesn't have addEventListner
+    resetButton.attachEvent('onClick', function(){location.reload()});
+}
+
+window.onload = function () {
+    var oneMinute = 20 * 1,
+        display = document.querySelector('#time');
+    startTimer(oneMinute, display);
+};
+
+// Initialize after array
+//var finalQuestionIndex = quizQuestions.length;
+
+
+
 });
